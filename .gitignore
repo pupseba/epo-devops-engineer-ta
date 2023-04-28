@@ -1,1 +1,3 @@
 secrets/*
+.terraform.lock.hcl
+.terraform
