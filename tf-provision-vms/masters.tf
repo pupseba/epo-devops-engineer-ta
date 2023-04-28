@@ -5,6 +5,7 @@ resource "google_compute_instance" "master01" {
 
   boot_disk {
     initialize_params {
+      image = "cos-cloud/cos-101-lts"
       size = "20"
     }
   }
