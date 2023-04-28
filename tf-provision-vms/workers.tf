@@ -3,6 +3,7 @@ resource "google_compute_instance" "worker" {
   name         = format("worker%02d", count.index + 1)
   machine_type = "e2-medium"
   zone         = "europe-west6-a"
+  allow_stopping_for_update = true
 
   boot_disk {
     initialize_params {
