@@ -13,6 +13,10 @@ resource "google_compute_instance" "worker" {
 
   network_interface {
     network = "default"
+
+    access_config {
+      // Ephemeral IP
+    }
   }
 
   metadata = {

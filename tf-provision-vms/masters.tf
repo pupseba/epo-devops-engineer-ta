@@ -13,6 +13,10 @@ resource "google_compute_instance" "master" {
 
   network_interface {
     network = "default"
+
+    access_config {
+      // Ephemeral IP
+    }
   }
 
   metadata = {
@@ -20,10 +24,6 @@ resource "google_compute_instance" "master" {
       #!/bin/bash
       echo "Hello, World!" > index.html
     EOF
-  }
-
-  access_config {
-    // Ephemeral IP
   }
 
   tags = ["master","kubernetes"]
