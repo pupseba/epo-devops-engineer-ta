@@ -33,3 +33,7 @@ echo ""
 echo "Install ansible"
 sudo apt-add-repository ppa:ansible/ansible -y
 sudo apt install ansible -y
+
+echo ""
+echo "Generate core user ssh key"
+ssh-keygen -t rsa -b 4096 -C "core" -f ~/.ssh/core -N ""

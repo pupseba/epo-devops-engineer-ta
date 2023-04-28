@@ -7,7 +7,7 @@ resource "google_compute_instance" "worker" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
+      image = "ubuntu-os-cloud/ubuntu-2204-lts"
       size = "20"
     }
   }
@@ -21,6 +21,7 @@ resource "google_compute_instance" "worker" {
   }
 
   metadata = {
+    ssh-keys = "core:${file("~/.ssh/core.pub")}"
     "startup-script" = <<-EOF
       #!/bin/bash
       echo "Hello, World!" > index.html
