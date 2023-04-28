@@ -1,5 +1,5 @@
 resource "google_compute_instance" "master" {
-  count        = 1
+  count        = 2
   name         = format("master%02d", count.index + 1)
   machine_type = "e2-medium"
   zone         = "europe-west6-a"
@@ -26,6 +26,18 @@ resource "google_compute_instance" "master" {
       #!/bin/bash
       echo "Hello, World!" > index.html
     EOF
+  }
+
+  provisioner "file" {
+    source      = "/home/pup_seba/.ssh/core"
+    destination = "/tmp/core"
+    connection {
+      type = "ssh"
+      user = "core"
+      private_key = file("/home/pup_seba/.ssh/core")
+      agent = "false"
+      host = google_compute_instance.worker[count.index].network_interface[0].access_config[0].nat_ip
+    }
   }
 
   tags = ["master","kubernetes"]
