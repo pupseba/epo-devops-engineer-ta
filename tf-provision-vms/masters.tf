@@ -22,5 +22,9 @@ resource "google_compute_instance" "master" {
     EOF
   }
 
+  access_config {
+    // Ephemeral IP
+  }
+
   tags = ["master","kubernetes"]
 }

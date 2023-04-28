@@ -22,5 +22,9 @@ resource "google_compute_instance" "worker" {
     EOF
   }
 
+  access_config {
+    // Ephemeral IP
+  }
+
   tags = ["worker","kubernetes"]
 }
