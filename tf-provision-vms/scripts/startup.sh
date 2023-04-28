@@ -48,7 +48,7 @@ if [[ $HOSTNAME == "master01" ]]; then
   cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   chown $(id -u):$(id -g) $HOME/.kube/config
 elif [[ $HOSTNAME == master* ]]; then
-  if [[ $HOSTNAME != "master01"]]; then
+  if [[ $HOSTNAME != "master01" ]]; then
   ssh -i /tmp/core -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "LogLevel=ERROR" core@master01 'cat /tmp/kubeadm_output | tail -n2' | bash -s -- --control-plane
   mkdir -p $HOME/.kube
   cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
