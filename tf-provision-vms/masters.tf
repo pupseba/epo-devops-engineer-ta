@@ -1,5 +1,5 @@
 resource "google_compute_instance" "master" {
-  count        = 2
+  count        = 1
   name         = format("master%02d", count.index + 1)
   machine_type = "e2-medium"
   zone         = "europe-west6-a"
@@ -22,10 +22,7 @@ resource "google_compute_instance" "master" {
 
   metadata = {
     ssh-keys = "core:${file("~/.ssh/core.pub")}"
-    "startup-script" = <<-EOF
-      #!/bin/bash
-      echo "Hello, World!" > index.html
-    EOF
+    "startup-script" = file("scripts/startup.sh")
   }
 
   provisioner "file" {
