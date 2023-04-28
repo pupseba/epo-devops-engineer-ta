@@ -33,4 +33,3 @@ echo ""
 echo "Install ansible"
 sudo apt-add-repository ppa:ansible/ansible -y
 sudo apt install ansible -y
-
