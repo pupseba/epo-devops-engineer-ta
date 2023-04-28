@@ -1,5 +1,6 @@
-resource "google_compute_instance" "worker01" {
-  name         = "worker01"
+resource "google_compute_instance" "worker" {
+  count        = 3
+  name         = "format("worker%02d", count.index + 1)"
   machine_type = "e2-micro"
   zone         = "europe-west6-a"
 
