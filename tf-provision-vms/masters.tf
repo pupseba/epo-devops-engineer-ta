@@ -36,7 +36,7 @@ resource "google_compute_instance" "master" {
       user = "core"
       private_key = file("/home/pup_seba/.ssh/core")
       agent = "false"
-      host = google_compute_instance.worker[count.index].network_interface[0].access_config[0].nat_ip
+      host = google_compute_instance.master[count.index].network_interface[0].access_config[0].nat_ip
     }
   }
 
