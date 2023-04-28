@@ -4,7 +4,8 @@ resource "google_compute_instance" "worker" {
   machine_type = "e2-medium"
   zone         = "europe-west6-a"
   allow_stopping_for_update = true
-
+  depends_on = [google_compute_instance.master[0]]
+  # depends_on = [google_compute_instance.master[length(google_compute_instance.master)-1]]
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-2204-lts"
