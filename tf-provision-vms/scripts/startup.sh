@@ -54,7 +54,7 @@ systemctl restart containerd ; systemctl enable containerd
 
 # Executes code depending on the node it is running on
 if [[ $HOSTNAME == "master01" ]]; then
-  kubeadm init --control-plane-endpoint=master01 --pod-network-cidr=192.168.0.0/16 | tee /tmp/kubeadm_output
+  kubeadm init --control-plane-endpoint=master01 --pod-network-cidr=192.168.0.0/16 &> /tmp/kubeadm_output
   sleep 180
   mkdir -p /root/.kube
   cp -i /etc/kubernetes/admin.conf /root/.kube/config
