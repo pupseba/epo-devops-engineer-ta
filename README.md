@@ -1,3 +1,9 @@
+# Kubernetes deployment
+
+Is done via...
+
+
+
 # Connection
 
 ## dns resolution
