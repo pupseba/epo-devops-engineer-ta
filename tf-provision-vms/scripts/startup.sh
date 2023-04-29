@@ -59,7 +59,7 @@ if [[ $HOSTNAME == "master01" ]]; then
   mkdir -p /root/.kube
   cp -i /etc/kubernetes/admin.conf /root/.kube/config
   chown $(id -u):$(id -g) /root/.kube/config
-  while [[ $(kubectl get cs | grep Healthy | wc -l) -ne 3]]; do sleep 10; done
+  while [[ $(kubectl get cs | grep Healthy | wc -l) -ne 3 ]]; do sleep 10; done
   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
 elif [[ $HOSTNAME == master* ]]; then
   if [[ $HOSTNAME != "master01" ]]; then
