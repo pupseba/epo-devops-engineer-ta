@@ -62,6 +62,7 @@ if [[ $HOSTNAME == "master01" ]]; then
   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
 elif [[ $HOSTNAME == master* ]]; then
   if [[ $HOSTNAME != "master01" ]]; then
+  sleep 180
   ssh -i /tmp/core -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "LogLevel=ERROR" core@master01 'cat /tmp/kubeadm_output | tail -n2' | bash -s -- --control-plane
   sleep 180
   mkdir -p /root/.kube
