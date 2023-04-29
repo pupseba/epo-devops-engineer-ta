@@ -11,7 +11,7 @@ Configuration is done in an idempotent manner, allowing its execution for adding
 Add the following entry to your /etc/hosts file
 
 ```
-34.65.159.24 master01
+34.65.89.124 master01
 ```
 
 # Monitoring
