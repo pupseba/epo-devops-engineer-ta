@@ -37,3 +37,10 @@ sudo apt install ansible -y
 echo ""
 echo "Generate core user ssh key"
 ssh-keygen -t rsa -b 4096 -C "core" -f ~/.ssh/core -N ""
+
+echo ""
+echo "Install kubectl"
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+apt update
+apt install kubectl -y

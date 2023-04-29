@@ -59,10 +59,11 @@ if [[ $HOSTNAME == "master01" ]]; then
   mkdir -p /root/.kube
   cp -i /etc/kubernetes/admin.conf /root/.kube/config
   chown $(id -u):$(id -g) /root/.kube/config
-  while [[ $(kubectl get cs | grep Healthy | wc -l) -ne 3 ]]; do sleep 10; done
   echo "Kubernetes cluster is ready" > /tmp/cluster_ready
   sleep 90
+  echo "sleep is over" >> /tmp/cluster_ready
   kubectl --kubeconfig=/root/.kube/config apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
+  echo "calico is ready" >> /tmp/cluster_ready
 elif [[ $HOSTNAME == master* ]]; then
   if [[ $HOSTNAME != "master01" ]]; then
   sleep 180
