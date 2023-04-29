@@ -63,7 +63,14 @@ if [[ $HOSTNAME == "master01" ]]; then
   sleep 90
   echo "Sleep is over" >> /tmp/cluster_ready
   kubectl --kubeconfig=/root/.kube/config apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
-  echo "Calico install executed" >> /tmp/cluster_ready
+  echo "K8s install dashboard" >> /tmp/cluster_ready
+  kubectl --kubeconfig=/root/.kube/config apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+  echo "Prepare k8s dashboard" >> /tmp/cluster_ready
+  kubectl --kubeconfig=/root/.kube/config apply -f /tmp/yamls/k8s_dashboard.yaml
+  echo "Deploy logging-system" >> /tmp/cluster_ready
+  kubectl --kubeconfig=/root/.kube/config apply -f /tmp/yamls/logging.yaml
+  echo "Finished" >> /tmp/cluster_ready
+
 elif [[ $HOSTNAME == master* ]]; then
   if [[ $HOSTNAME != "master01" ]]; then
   sleep 180

@@ -37,5 +37,17 @@ resource "google_compute_instance" "master" {
     }
   }
 
+  provisioner "file" {
+    source      = "/home/pup_seba/repos/epo-devops-engineer-ta/tf-provision-k8s/manifests/"
+    destination = "/tmp/yamls"
+    connection {
+      type = "ssh"
+      user = "core"
+      private_key = file("/home/pup_seba/.ssh/core")
+      agent = "false"
+      host = google_compute_instance.master[count.index].network_interface[0].access_config[0].nat_ip
+    }
+  }
+
   tags = ["master","kubernetes"]
 }
