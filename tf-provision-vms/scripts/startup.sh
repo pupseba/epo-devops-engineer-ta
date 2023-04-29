@@ -38,23 +38,35 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository --yes "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt update
 apt install containerd.io -y
-containerd config default>/etc/containerd/config.toml
+containerd config default>/etc/containerd/config.
+sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
+
+cat <<EOF | sudo tee /etc/crictl.yaml
+runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 2
+debug: true
+pull-image-on-create: false
+disable-pull-on-run: false
+EOF
+
 systemctl restart containerd ; systemctl enable containerd
 
 # Executes code depending on the node it is running on
 if [[ $HOSTNAME == "master01" ]]; then
   kubeadm init --control-plane-endpoint=master01 --pod-network-cidr=192.168.0.0/16 | tee /tmp/kubeadm_output
-  mkdir -p $HOME/.kube
-  cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  chown $(id -u):$(id -g) $HOME/.kube/config
   sleep 180
+  mkdir -p /root/.kube
+  cp -i /etc/kubernetes/admin.conf /root/.kube/config
+  chown $(id -u):$(id -g) /root/.kube/config
   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
 elif [[ $HOSTNAME == master* ]]; then
   if [[ $HOSTNAME != "master01" ]]; then
   ssh -i /tmp/core -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "LogLevel=ERROR" core@master01 'cat /tmp/kubeadm_output | tail -n2' | bash -s -- --control-plane
-  mkdir -p $HOME/.kube
-  cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  chown $(id -u):$(id -g) $HOME/.kube/config
+  sleep 180
+  mkdir -p /root/.kube
+  cp -i /etc/kubernetes/admin.conf /root/.kube/config
+  chown $(id -u):$(id -g) /root/.kube/config
   fi
 elif [[ $HOSTNAME == worker* ]]; then
   ssh -i /tmp/core -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "LogLevel=ERROR" core@master01 'cat /tmp/kubeadm_output | tail -n2' | bash
