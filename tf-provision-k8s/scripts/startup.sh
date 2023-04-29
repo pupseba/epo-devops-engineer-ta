@@ -61,9 +61,9 @@ if [[ $HOSTNAME == "master01" ]]; then
   chown $(id -u):$(id -g) /root/.kube/config
   echo "Kubernetes cluster is ready" > /tmp/cluster_ready
   sleep 90
-  echo "sleep is over" >> /tmp/cluster_ready
+  echo "Sleep is over" >> /tmp/cluster_ready
   kubectl --kubeconfig=/root/.kube/config apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
-  echo "calico is ready" >> /tmp/cluster_ready
+  echo "Calico install executed" >> /tmp/cluster_ready
 elif [[ $HOSTNAME == master* ]]; then
   if [[ $HOSTNAME != "master01" ]]; then
   sleep 180

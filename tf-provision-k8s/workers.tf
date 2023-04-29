@@ -1,5 +1,5 @@
 resource "google_compute_instance" "worker" {
-  count        = 1
+  count        = 3
   name         = format("worker%02d", count.index + 1)
   machine_type = "e2-medium"
   zone         = "europe-west6-a"
