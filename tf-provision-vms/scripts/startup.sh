@@ -70,5 +70,6 @@ elif [[ $HOSTNAME == master* ]]; then
   chown $(id -u):$(id -g) /root/.kube/config
   fi
 elif [[ $HOSTNAME == worker* ]]; then
+  sleep 180
   ssh -i /tmp/core -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "LogLevel=ERROR" core@master01 'cat /tmp/kubeadm_output | tail -n2' | bash
 fi
