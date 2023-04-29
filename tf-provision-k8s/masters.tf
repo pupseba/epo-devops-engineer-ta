@@ -39,7 +39,7 @@ resource "google_compute_instance" "master" {
 
   provisioner "file" {
     source      = "/home/pup_seba/repos/epo-devops-engineer-ta/tf-provision-k8s/manifests/"
-    destination = "/tmp/yamls"
+    destination = "/tmp/yamls/"
     connection {
       type = "ssh"
       user = "core"

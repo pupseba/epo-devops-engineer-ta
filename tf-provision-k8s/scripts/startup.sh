@@ -67,7 +67,11 @@ if [[ $HOSTNAME == "master01" ]]; then
   kubectl --kubeconfig=/root/.kube/config apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
   echo "Prepare k8s dashboard" >> /tmp/cluster_ready
   kubectl --kubeconfig=/root/.kube/config apply -f /tmp/yamls/k8s_dashboard.yaml
+  echo "Deploy elastic operator" >> /tmp/cluster_ready
+  kubectl create -f https://download.elastic.co/downloads/eck/2.7.0/crds.yaml
+  kubectl apply -f https://download.elastic.co/downloads/eck/2.7.0/operator.yaml
   echo "Deploy logging-system" >> /tmp/cluster_ready
+  sleep 30
   kubectl --kubeconfig=/root/.kube/config apply -f /tmp/yamls/logging.yaml
   echo "Finished" >> /tmp/cluster_ready
 

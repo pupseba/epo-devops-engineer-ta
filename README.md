@@ -1,8 +1,8 @@
 # Kubernetes deployment
 
-Is done via...
+Deployment of Kubernetes cluster is done via terraform exclusively. Manifests are created in an atomic way, which enables granular operations over the nodes.
 
-
+Configuration is done in an idempotent manner, allowing its execution for adding/removing nodes without impact in the current status.
 
 # Connection
 
